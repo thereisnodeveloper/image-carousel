@@ -10,18 +10,20 @@ function addImagesToCarousel() {
   const numImagesToAdd = 5;
   // #endregion
 
-  for (let i = 0; i < numImagesToAdd; i += 1) {
-    const imgToAdd = new Image();
-    const rand01 = Math.floor(Math.random());
-    imgToAdd.src = imageBank[rand01];
-    
-    styleImages(imgToAdd);
-    
-    document.body.appendChild(imgToAdd);
+  function styleImages(img) {
+    const newImg = img.cloneNode(true);
+    newImg.style.border = 'solid 1px black';
+    return newImg;
   }
 
-  function styleImages(img) {
-    img.style.border = 'solid 1px black';
+  for (let i = 0; i < numImagesToAdd; i += 1) {
+    let imgToAdd = new Image();
+    const rand01 = Math.floor(Math.random());
+    imgToAdd.src = imageBank[rand01];
+
+    imgToAdd = styleImages(imgToAdd);
+
+    document.body.appendChild(imgToAdd);
   }
 }
 addImagesToCarousel();
