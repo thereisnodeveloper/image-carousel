@@ -3,7 +3,7 @@
 // [ ]TODO: measure length of each image
 // [ ]TODO: initiate carousel by going to first image
 
-import carouselImage1 from './images/100x200.svg';
+import carouselImage1 from './images/300x200.svg';
 import carouselImage2 from './images/600x400.svg';
 
 const testElem = document.createElement('div');
@@ -20,9 +20,13 @@ class Carousel {
     const imageBank = [carouselImage1, carouselImage2];
     const numImagesToAdd = 5;
     // #endregion
+
     function styleImages(img) {
       const newImg = img.cloneNode(true);
       newImg.style.border = 'solid 1px black';
+      newImg.style.flex = '1 1 0px';
+      newImg.style.minWidth = '0px';
+      newImg.style.minHeight = '0px';
       return newImg;
     }
     /** * create carousel to hold images */
@@ -30,7 +34,7 @@ class Carousel {
       const carousel = document.createElement('div');
       carousel.classList.add('.carousel');
       carousel.style.display = 'flex';
-      carousel.style.flex = 1;
+      carousel.style.border = '1px solid red';
       return carousel;
     }
     const carousel = createCarousel();
@@ -47,7 +51,10 @@ class Carousel {
     document.body.appendChild(carousel);
   }
 
-  static makeViewingWindow() {}
+  // static makeViewingWindow() {
+  // }
+
+  static measureImages() {}
 }
 
 Carousel.addImagesToCarousel();
