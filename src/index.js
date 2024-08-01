@@ -18,7 +18,7 @@ function addImagesToCarousel() {
 
   for (let i = 0; i < numImagesToAdd; i += 1) {
     let imgToAdd = new Image();
-    const rand01 = Math.floor(Math.random());
+    const rand01 = Math.round(Math.random());
     imgToAdd.src = imageBank[rand01];
 
     imgToAdd = styleImages(imgToAdd);
