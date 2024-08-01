@@ -15,6 +15,15 @@ function addImagesToCarousel() {
     newImg.style.border = 'solid 1px black';
     return newImg;
   }
+  /** * create carousel to hold images */
+  function createCarousel() {
+    const carousel = document.createElement('div');
+    carousel.classList.add('.carousel');
+    carousel.style.display = 'flex';
+    carousel.style.flex = 1;
+    return carousel;
+  }
+  const carousel = createCarousel();
 
   for (let i = 0; i < numImagesToAdd; i += 1) {
     let imgToAdd = new Image();
@@ -23,8 +32,9 @@ function addImagesToCarousel() {
 
     imgToAdd = styleImages(imgToAdd);
 
-    document.body.appendChild(imgToAdd);
+    carousel.appendChild(imgToAdd);
   }
+  document.body.appendChild(carousel);
 }
 addImagesToCarousel();
 
