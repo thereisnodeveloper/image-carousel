@@ -5,8 +5,11 @@
 .viewing-window{
     position:absolute;
     top: 0px;
+    left: 1px;
+    /* border: inset red 5px; */
 }
 
 .carousel{
     position:relative;
 }
+

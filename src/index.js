@@ -66,8 +66,6 @@ class Carousel {
       imgToAdd.src = imageBank[rand01];
       imgToAdd = styleCarouselItems(imgToAdd);
 
-      // FIXME: trying div wrapper around img to see if offsetHeight is reflected correctly
-
       imgToAdd = document.createElement('div').appendChild(imgToAdd);
       imgToAdd.classList.add('carousel-item');
       imgToAdd.setAttribute('id', i);
@@ -88,7 +86,6 @@ class Carousel {
 
 Carousel.addImagesToCarousel();
 
-//FIXME:
 function updateViewingWindowSize(viewingWindow, carouselItem) {
   viewingWindow.style.width = `${carouselItem.clientWidth}px`;
   viewingWindow.style.height = `${carouselItem.clientHeight}px`;
@@ -104,6 +101,7 @@ function makeViewingWindow(evt) {
   updateViewingWindowSize(viewingWindow, carouselItem);
 
   viewingWindow.style.border = 'solid 5px green';
+  viewingWindow.style.boxSizing = 'border-box';
   viewingWindow.className = 'viewing-window';
 
   //FIXME:
@@ -117,22 +115,35 @@ document
 
 // Carousel.carouselElemRef.style.border = '10px solid gold';
 
-//FIXME: moveCarousel() doesn't work more than once
-
-function moveCarousel(carouselItemWidth) {
+/**
+ * Moves the carousel in the specified direction.
+ *
+ * @param {number} carouselItemWidth - The width of a single carousel item.
+ * @param {string} direction - The direction to move the carousel.
+ *                             Expected values: 'left', 'right'.
+ *
+ * @example
+ * // Move the carousel to the left
+ * moveCarousel(200, 'left');
+ *
+ * @example
+ * // Move the carousel to the right
+ * moveCarousel(200, 'right');
+ */
+function moveCarousel(carouselItemWidth, direction) {
   // console.log('carouselItemWidth:', carouselItemWidth)
   const carousel = document.querySelector('.carousel');
-  const currentPosition = carousel.style.left.replace('px','');
-  console.log('currentPosition:', currentPosition);
-  const shiftAmount = currentPosition - carouselItemWidth;
-  console.log('shiftAmount:', shiftAmount);
+  const currentPosition = carousel.style.left.replace('px', '');
+  // console.log('currentPosition:', currentPosition);
+
+  let shiftAmount;
+  if (direction === 'left') {
+    shiftAmount = currentPosition - carouselItemWidth;
+  } else if (direction === 'right') {
+    shiftAmount = currentPosition + carouselItemWidth;
+  }
+  // console.log('shiftAmount:', shiftAmount);
   carousel.style.left = `${shiftAmount}px`;
 }
 const carouselItemWidth = document.querySelector('.carousel-item').clientWidth;
-moveCarousel(carouselItemWidth);
-moveCarousel(carouselItemWidth);
 
-// const testString = '1000px';
-// const pxPos = testString.search('px');
-// console.log('testString.replace():', testString.replace('px', ''))
-// console.log('testString.slice(0, pxPos);:', testString.slice(0, pxPos))
