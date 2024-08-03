@@ -2,7 +2,7 @@
 // [x]TODO: css reset/normalize
 
 // [ ]TODO: create viewing window
-//CURRENT: figure out how to make viewing window same size as 1 image
+// CURRENT: figure out how to make viewing window same size as 1 image
 // [ ]TODO: measure length of each image
 // [ ]TODO: initiate carousel by going to first image
 
@@ -17,6 +17,22 @@ import carouselImage1 from './images/300x200.svg';
 import carouselImage2 from './images/600x400.svg';
 
 const testElem = document.createElement('div');
+
+// //FIXME: testing ways to get image width
+// const testImg = new Image();
+// testImg.src = carouselImage1;
+// testImg.classList.add('test');
+// testImg.style.border = '3px solid red';
+// document.body.appendChild(testImg);
+
+// function calcSize() {
+//   const size = document.querySelector('.test').clientWidth;
+//   console.log('image loaded');
+//   console.log('size:' + size);
+// }
+// // testImg.onload = calcSize();
+// testImg.addEventListener('load', calcSize);
+// document.querySelector('.test').addEventListener('load', calcSize);
 
 class Carousel {
   // constructor(){
@@ -45,18 +61,19 @@ class Carousel {
       carousel.style.border = '1px solid red';
       return carousel;
     }
-    this.carousel = createCarousel();
+    this.carouselElemRef = createCarousel();
+
+
     for (let i = 0; i < numImagesToAdd; i += 1) {
       let imgToAdd = new Image();
       const rand01 = Math.round(Math.random());
       imgToAdd.src = imageBank[rand01];
       imgToAdd = styleCarouselItems(imgToAdd);
 
-
-      //FIXME: trying div wrapper around img to see if offsetHeight is reflected correctly
+      // FIXME: trying div wrapper around img to see if offsetHeight is reflected correctly
 
       imgToAdd = document.createElement('div').appendChild(imgToAdd);
-      imgToAdd.classList.add(`carousel-item`);
+      imgToAdd.classList.add('carousel-item');
       imgToAdd.setAttribute('id', i);
 
       // let imgWrapper = document.createElement('div');
@@ -64,31 +81,12 @@ class Carousel {
       // imgWrapper.appendChild(imgToAdd);
       // imgWrapper = styleCarouselItems(imgWrapper);
 
-      this.carousel.appendChild(imgToAdd);
+      this.carouselElemRef.appendChild(imgToAdd);
     }
-    document.body.appendChild(this.carousel);
-  }
-
-  static get widthHeight() {
-    console.log(this.carousel.firstChild);
-
-    const [height, width] = [
-      this.carousel.firstChild.offsetHeight,
-      this.carousel.firstChild.offsetWidth,
-    ];
-    return [width, height];
-  }
-
-  static makeViewingWindow() {
-    const viewingWindow = document.createElement('div');
-    const vwStyle = viewingWindow.style;
-    [vwStyle.width, vwStyle.height] = this.widthHeight;
-    // vwStyle.height = `${this.imagesArray[0].height}px`;
-    vwStyle.border = 'solid 5px green';
-    // viewingWindow.textContent = ' ';
-    // viewingWindow.style.zIndex = 2;
-    // this.carousel.appendChild(viewingWindow);
-    document.body.appendChild(viewingWindow);
+    const carouselWrapper = document.createElement('div');
+    carouselWrapper.className = 'carousel-wrapper'
+    carouselWrapper.appendChild(this.carouselElemRef);
+    document.body.appendChild(carouselWrapper);
   }
 
   static get imgWidth() {
@@ -101,10 +99,34 @@ class Carousel {
 }
 
 Carousel.addImagesToCarousel();
-Carousel.makeViewingWindow();
 
-const thing = document.querySelector('.carousel-item').getBoundingClientRect().height;
-console.log(thing);
+function widthHeight(elem) {
+  const [height, width] = [
+    elem.firstChild.offsetHeight,
+    elem.firstChild.offsetWidth,
+  ];
+  return [width, height];
+}
+
+
+function makeViewingWindow(evt) {
+  const viewingWindow = document.createElement('div');
+  const vwStyle = viewingWindow.style;
+  vwStyle.width = `${evt.target.clientWidth}px`;
+  vwStyle.height = `${evt.target.clientHeight}px`;
+  // [vwStyle.width, vwStyle.height] = [evt.target.clientWidth, evt.target.clientHeight];
+  // [vwStyle.width, vwStyle.height] = ['520px', '350px'];
+  vwStyle.border = 'solid 5px green';
+  viewingWindow.className = 'viewing-window';
+  document.querySelector('.carousel-wrapper').appendChild(viewingWindow);
+}
+
+function positionViewingWindow(){
+
+}
+
+document.querySelector('.carousel-item').addEventListener('load', makeViewingWindow);
+
 
 // Carousel.addImagesToCarousel();
 
