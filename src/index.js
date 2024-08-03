@@ -1,14 +1,12 @@
 // [x]TODO: import image
 // [x]TODO: css reset/normalize
+// [ ]TODO: refactor code
+// [ ]TODO: carousel shift
+// [ ]TODO: FIX viewing window not resizing with browser
 
-// [ ]TODO: create viewing window
+// [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image
-// [ ]TODO: measure length of each image
-// [ ]TODO: initiate carousel by going to first image
-
-// commit: no longer look Carousel's array to calculate width/height, since
-// image size may change after appending to carousel, and array has reference to
-// image AT its creation
+// [X]TODO: measure length of each image
 
 import './css-reset.css';
 import './style.css';
@@ -18,7 +16,6 @@ import carouselImage2 from './images/600x400.svg';
 
 const testElem = document.createElement('div');
 
-// //FIXME: testing ways to get image width
 // const testImg = new Image();
 // testImg.src = carouselImage1;
 // testImg.classList.add('test');
@@ -56,13 +53,12 @@ class Carousel {
     /** * create carousel to hold images */
     function createCarousel() {
       const carousel = document.createElement('div');
-      carousel.classList.add('.carousel');
+      carousel.classList.add('carousel');
       carousel.style.display = 'flex';
-      carousel.style.border = '1px solid red';
+      // carousel.style.border = '1px solid red';
       return carousel;
     }
     this.carouselElemRef = createCarousel();
-
 
     for (let i = 0; i < numImagesToAdd; i += 1) {
       let imgToAdd = new Image();
@@ -84,29 +80,16 @@ class Carousel {
       this.carouselElemRef.appendChild(imgToAdd);
     }
     const carouselWrapper = document.createElement('div');
-    carouselWrapper.className = 'carousel-wrapper'
+    carouselWrapper.className = 'carousel-wrapper';
     carouselWrapper.appendChild(this.carouselElemRef);
     document.body.appendChild(carouselWrapper);
   }
 
-  static get imgWidth() {
-    return this.imagesArray[0].style.width;
-  }
 
-  static get imgHeight() {
-    return this.imagesArray[0].style.height;
-  }
 }
 
 Carousel.addImagesToCarousel();
 
-function widthHeight(elem) {
-  const [height, width] = [
-    elem.firstChild.offsetHeight,
-    elem.firstChild.offsetWidth,
-  ];
-  return [width, height];
-}
 
 
 function makeViewingWindow(evt) {
@@ -121,20 +104,18 @@ function makeViewingWindow(evt) {
   document.querySelector('.carousel-wrapper').appendChild(viewingWindow);
 }
 
-function positionViewingWindow(){
+// function positionViewingWindow(){
+//   document.querySelector('.viewing-window')
+// }
 
-}
+document
+  .querySelector('.carousel-item')
+  .addEventListener('load', makeViewingWindow);
 
-document.querySelector('.carousel-item').addEventListener('load', makeViewingWindow);
+// Carousel.carouselElemRef.style.border = '10px solid gold';
 
-
-// Carousel.addImagesToCarousel();
-
-// div with display:flex
-
-// initiate by setting carousel to first image
-
-// generate array that contains amount of movement required
-
-// function to move carousel
-// read the current image's size
+// function moveCarousel(direction) {
+//   const carousel = document.querySelector('.carousel');
+//   carousel.style.left = '100px';
+// }
+// moveCarousel()

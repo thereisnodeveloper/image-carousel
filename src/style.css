@@ -1,3 +1,11 @@
+.carousel-wrapper{
+    position:relative
+}
+
 .viewing-window{
-    position:relative;
+    position:absolute;
+    top: 0px;
+}
+
+.carousel{
 }
