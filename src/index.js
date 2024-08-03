@@ -84,29 +84,32 @@ class Carousel {
     carouselWrapper.appendChild(this.carouselElemRef);
     document.body.appendChild(carouselWrapper);
   }
-
-
 }
 
 Carousel.addImagesToCarousel();
 
-
+//FIXME:
+function updateViewingWindowSize(viewingWindow, carouselItem) {
+  viewingWindow.style.width = `${carouselItem.clientWidth}px`;
+  viewingWindow.style.height = `${carouselItem.clientHeight}px`;
+}
+// document.querySelector('.viewing-window').addEventListener('resize', updateViewingWindowSize)
 
 function makeViewingWindow(evt) {
   const viewingWindow = document.createElement('div');
-  const vwStyle = viewingWindow.style;
-  vwStyle.width = `${evt.target.clientWidth}px`;
-  vwStyle.height = `${evt.target.clientHeight}px`;
-  // [vwStyle.width, vwStyle.height] = [evt.target.clientWidth, evt.target.clientHeight];
-  // [vwStyle.width, vwStyle.height] = ['520px', '350px'];
-  vwStyle.border = 'solid 5px green';
+  const carouselItem = document.querySelector('.carousel-item');
+  // vwStyle.width = `${evt.target.clientWidth}px`;
+  // vwStyle.height = `${evt.target.clientHeight}px`;
+
+  updateViewingWindowSize(viewingWindow, carouselItem);
+
+  viewingWindow.style.border = 'solid 5px green';
   viewingWindow.className = 'viewing-window';
+
+  //FIXME:
+  // viewingWindow.addEventListener('resize', updateViewingWindowSize)
   document.querySelector('.carousel-wrapper').appendChild(viewingWindow);
 }
-
-// function positionViewingWindow(){
-//   document.querySelector('.viewing-window')
-// }
 
 document
   .querySelector('.carousel-item')
@@ -114,8 +117,22 @@ document
 
 // Carousel.carouselElemRef.style.border = '10px solid gold';
 
-// function moveCarousel(direction) {
-//   const carousel = document.querySelector('.carousel');
-//   carousel.style.left = '100px';
-// }
-// moveCarousel()
+//FIXME: moveCarousel() doesn't work more than once
+
+function moveCarousel(carouselItemWidth) {
+  // console.log('carouselItemWidth:', carouselItemWidth)
+  const carousel = document.querySelector('.carousel');
+  const currentPosition = carousel.style.left.replace('px','');
+  console.log('currentPosition:', currentPosition);
+  const shiftAmount = currentPosition - carouselItemWidth;
+  console.log('shiftAmount:', shiftAmount);
+  carousel.style.left = `${shiftAmount}px`;
+}
+const carouselItemWidth = document.querySelector('.carousel-item').clientWidth;
+moveCarousel(carouselItemWidth);
+moveCarousel(carouselItemWidth);
+
+// const testString = '1000px';
+// const pxPos = testString.search('px');
+// console.log('testString.replace():', testString.replace('px', ''))
+// console.log('testString.slice(0, pxPos);:', testString.slice(0, pxPos))
