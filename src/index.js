@@ -136,7 +136,7 @@ document
 function moveCarousel(carouselItemWidth, direction) {
   // console.log('carouselItemWidth:', carouselItemWidth)
   const carousel = document.querySelector('.carousel');
-  const currentPosition = carousel.style.left.replace('px', '');
+  const currentPosition = +carousel.style.left.replace('px', '');
   // console.log('currentPosition:', currentPosition);
 
   let shiftAmount;
