@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-restricted-syntax */
 // [x]TODO: import image
 // [x]TODO: css reset/normalize
 // [ ]TODO: refactor code
@@ -101,7 +103,7 @@ function makeViewingWindow(evt) {
   // vwStyle.width = `${evt.target.clientWidth}px`;
   // vwStyle.height = `${evt.target.clientHeight}px`;
 
-  updateViewingWindowSize(viewingWindow, carouselItem);
+  // updateViewingWindowSize(viewingWindow, carouselItem);
 
   viewingWindow.style.border = 'solid 5px green';
   viewingWindow.style.boxSizing = 'border-box';
@@ -179,4 +181,24 @@ function addNavButtons() {
 
   document.querySelector('.carousel-wrapper').append(goLeft, goRight);
 }
+const resizeObserver = new ResizeObserver((resizeEntries) => {
+  for (const entry of resizeEntries) {
+    if (entry.contentBoxSize) {
+      updateViewingWindowSize(
+        document.querySelector('.viewing-window'),
+        document.querySelector('.carousel-item'),
+      );
+    }
+  }
+});
+
+//FIXME: not sure how to make viewing window adjust size when element changes
+resizeObserver.observe(document.querySelector('.carousel'));
+
+// window.onresize(
+//   updateViewingWindowSize(
+//     document.querySelector('.viewing-window'),
+//     document.querySelector('.carousel-item')
+//   )
+// );
 addNavButtons();
