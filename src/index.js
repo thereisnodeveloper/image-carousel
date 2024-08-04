@@ -3,8 +3,8 @@
 // [x]TODO: import image
 // [x]TODO: css reset/normalize
 // [ ]TODO: refactor code
-// [ ]TODO: carousel shift
-// [ ]TODO: FIX viewing window not resizing with browser
+// [x]TODO: carousel shift
+// [x]TODO: FIX viewing window not resizing with browser
 
 // [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image
@@ -97,20 +97,17 @@ function updateViewingWindowSize(viewingWindow, carouselItem) {
 }
 // document.querySelector('.viewing-window').addEventListener('resize', updateViewingWindowSize)
 
-function makeViewingWindow(evt) {
+function makeViewingWindow() {
   const viewingWindow = document.createElement('div');
   const carouselItem = document.querySelector('.carousel-item');
-  // vwStyle.width = `${evt.target.clientWidth}px`;
-  // vwStyle.height = `${evt.target.clientHeight}px`;
 
-  // updateViewingWindowSize(viewingWindow, carouselItem);
+  updateViewingWindowSize(viewingWindow, carouselItem);
 
   viewingWindow.style.border = 'solid 5px green';
+  viewingWindow.style.outline = 'solid 5px green';
   viewingWindow.style.boxSizing = 'border-box';
   viewingWindow.className = 'viewing-window';
 
-  // FIXME:
-  // viewingWindow.addEventListener('resize', updateViewingWindowSize)
   document.querySelector('.carousel-wrapper').appendChild(viewingWindow);
 }
 
@@ -186,13 +183,12 @@ const resizeObserver = new ResizeObserver((resizeEntries) => {
     if (entry.contentBoxSize) {
       updateViewingWindowSize(
         document.querySelector('.viewing-window'),
-        document.querySelector('.carousel-item'),
+        document.querySelector('.carousel-item')
       );
     }
   }
 });
 
-//FIXME: not sure how to make viewing window adjust size when element changes
 resizeObserver.observe(document.querySelector('.carousel'));
 
 // window.onresize(
