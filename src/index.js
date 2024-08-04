@@ -14,6 +14,9 @@ import './style.css';
 import carouselImage1 from './images/300x200.svg';
 import carouselImage2 from './images/600x400.svg';
 
+import leftArrow from './images/arrow-left.svg';
+import rightArrow from './images/arrow-right.svg';
+
 const testElem = document.createElement('div');
 
 // const testImg = new Image();
@@ -104,7 +107,7 @@ function makeViewingWindow(evt) {
   viewingWindow.style.boxSizing = 'border-box';
   viewingWindow.className = 'viewing-window';
 
-  //FIXME:
+  // FIXME:
   // viewingWindow.addEventListener('resize', updateViewingWindowSize)
   document.querySelector('.carousel-wrapper').appendChild(viewingWindow);
 }
@@ -147,3 +150,33 @@ function moveCarousel(carouselItemWidth, direction) {
 }
 const carouselItemWidth = document.querySelector('.carousel-item').clientWidth;
 
+// FIXME: adding nav buttons to carousel wrapper (which also has carousel) might
+// cause carousel to offset weirdly
+
+function addNavButtons() {
+  // TODO:get img to serve as button
+  const goLeft = document.createElement('button');
+  const goRight = document.createElement('button');
+
+  function styleElement(element, backgroundImage) {
+    element.style.backgroundImage = `url(${backgroundImage})`;
+    element.style.backgroundSize = 'contain';
+    element.style.width = '30px';
+    element.style.height = '30px';
+  }
+  styleElement(goLeft, leftArrow);
+  styleElement(goRight, rightArrow);
+
+  [goLeft, goRight].forEach((button) => {
+    const width = document.querySelector('.carousel-item').clientWidth;
+    let direction;
+    if (button === goLeft) direction = 'left';
+    if (button === goRight) direction = 'right';
+    button.addEventListener('click', () => {
+      moveCarousel(width, direction);
+    });
+  });
+
+  document.querySelector('.carousel-wrapper').append(goLeft, goRight);
+}
+addNavButtons();
