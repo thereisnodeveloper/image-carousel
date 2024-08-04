@@ -1,15 +1,53 @@
-.carousel-wrapper{
-    position:relative
+:root {
+  --nav-bullet-size: 100px;
 }
 
-.viewing-window{
-    position:absolute;
-    top: 0px;
-    left: 1px;
-    /* border: inset red 5px; */
+.carousel-wrapper {
+  position: relative;
+  
 }
 
-.carousel{
-    position:relative;
+.viewing-window {
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  /* border: inset red 5px; */
 }
 
+.carousel {
+  position: relative;
+}
+
+.nav-container {
+  display: flex;
+}
+
+* .nav-container {
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-dot {
+  list-style-type: circle;
+  font-size: var(--nav-bullet-size);
+}
+
+.nav-dot.selected {
+    list-style-type: disc;
+    font-size: var(--nav-bullet-size);
+    color:darkblue;
+  }
+
+
+.nav-minimap {
+  display: flex;
+  gap: calc(var(--nav-bullet-size)/2);
+}
+
+.button-container{
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}

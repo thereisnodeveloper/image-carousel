@@ -40,6 +40,8 @@ class Carousel {
   // constructor(){
 
   // }
+  static numImages = 0;
+  static currentNavIndex = 0;
 
   static addImagesToCarousel() {
     // #region configs
@@ -60,7 +62,6 @@ class Carousel {
       const carousel = document.createElement('div');
       carousel.classList.add('carousel');
       carousel.style.display = 'flex';
-      // carousel.style.border = '1px solid red';
       return carousel;
     }
     this.carouselElemRef = createCarousel();
@@ -74,7 +75,7 @@ class Carousel {
       imgToAdd = document.createElement('div').appendChild(imgToAdd);
       imgToAdd.classList.add('carousel-item');
       imgToAdd.setAttribute('id', i);
-
+      Carousel.numImages += 1;
       // let imgWrapper = document.createElement('div');
       // imgWrapper.style.display = 'flex';
       // imgWrapper.appendChild(imgToAdd);
@@ -102,6 +103,18 @@ function makeViewingWindow() {
   const carouselItem = document.querySelector('.carousel-item');
 
   updateViewingWindowSize(viewingWindow, carouselItem);
+  const resizeObserver = new ResizeObserver((resizeEntries) => {
+    for (const entry of resizeEntries) {
+      if (entry.contentBoxSize) {
+        updateViewingWindowSize(
+          document.querySelector('.viewing-window'),
+          document.querySelector('.carousel-item')
+        );
+      }
+    }
+  });
+
+  resizeObserver.observe(document.querySelector('.carousel'));
 
   viewingWindow.style.border = 'solid 5px green';
   viewingWindow.style.outline = 'solid 5px green';
@@ -114,6 +127,13 @@ function makeViewingWindow() {
 document
   .querySelector('.carousel-item')
   .addEventListener('load', makeViewingWindow);
+
+function styleNavDot(navDotElem) {
+  console.log(navDotElem);
+  navDotElem.classList.toggle('selected');
+  return navDotElem;
+}
+const navDotArray = [];
 
 // Carousel.carouselElemRef.style.border = '10px solid gold';
 
@@ -132,7 +152,7 @@ document
  * // Move the carousel to the right
  * moveCarousel(200, 'right');
  */
-function moveCarousel(carouselItemWidth, direction) {
+function moveCarouselAndNav(carouselItemWidth, direction) {
   // console.log('carouselItemWidth:', carouselItemWidth)
   const carousel = document.querySelector('.carousel');
   const currentPosition = +carousel.style.left.replace('px', '');
@@ -140,9 +160,21 @@ function moveCarousel(carouselItemWidth, direction) {
 
   let shiftAmount;
   if (direction === 'left') {
-    shiftAmount = currentPosition - carouselItemWidth;
+    if (Carousel.currentNavIndex > 0) {
+      shiftAmount = currentPosition - carouselItemWidth;
+
+      styleNavDot(navDotArray[Carousel.currentNavIndex]);
+      Carousel.currentNavIndex -= 1;
+      styleNavDot(navDotArray[Carousel.currentNavIndex]);
+    }
   } else if (direction === 'right') {
-    shiftAmount = currentPosition + carouselItemWidth;
+    if (Carousel.currentNavIndex < navDotArray.length -1) {
+      shiftAmount = currentPosition + carouselItemWidth;
+
+      styleNavDot(navDotArray[Carousel.currentNavIndex]);
+      Carousel.currentNavIndex += 1;
+      styleNavDot(navDotArray[Carousel.currentNavIndex]);
+    }
   }
   // console.log('shiftAmount:', shiftAmount);
   carousel.style.left = `${shiftAmount}px`;
@@ -156,6 +188,10 @@ function addNavButtons() {
   // TODO:get img to serve as button
   const goLeft = document.createElement('button');
   const goRight = document.createElement('button');
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'button-container';
+  const navContainer = document.createElement('div');
+  navContainer.className = 'nav-container';
 
   function styleElement(element, backgroundImage) {
     element.style.backgroundImage = `url(${backgroundImage})`;
@@ -171,30 +207,39 @@ function addNavButtons() {
     let direction;
     if (button === goLeft) direction = 'left';
     if (button === goRight) direction = 'right';
-    button.addEventListener('click', () => {
-      moveCarousel(width, direction);
+    button.addEventListener('click', (evt) => {
+      moveCarouselAndNav(width, direction);
+      // navDotArray
     });
   });
 
-  document.querySelector('.carousel-wrapper').append(goLeft, goRight);
+  const navMinimap = createNavMinimap();
+  buttonContainer.append(goLeft, goRight);
+  navContainer.append(navMinimap, buttonContainer);
+  document.querySelector('.carousel-wrapper').append(navContainer);
 }
-const resizeObserver = new ResizeObserver((resizeEntries) => {
-  for (const entry of resizeEntries) {
-    if (entry.contentBoxSize) {
-      updateViewingWindowSize(
-        document.querySelector('.viewing-window'),
-        document.querySelector('.carousel-item')
-      );
-    }
+
+function createNavMinimap() {
+  const navMinimap = document.createElement('ul');
+  navMinimap.className = 'nav-minimap';
+
+  for (let i = 0; i < Carousel.numImages; i += 1) {
+    const liElem = document.createElement('li');
+    liElem.className = 'nav-dot';
+    liElem.setAttribute('id', i);
+    navMinimap.appendChild(liElem);
+    navDotArray.push(liElem);
   }
-});
+  return navMinimap;
+}
 
-resizeObserver.observe(document.querySelector('.carousel'));
-
-// window.onresize(
-//   updateViewingWindowSize(
-//     document.querySelector('.viewing-window'),
-//     document.querySelector('.carousel-item')
-//   )
-// );
 addNavButtons();
+
+function initializeNavDots() {
+  const currentNavIndex = 0;
+  styleNavDot(navDotArray[0]);
+  // document.body.appendChild()
+  return currentNavIndex;
+}
+
+Carousel.currentNavIndex = initializeNavDots();
