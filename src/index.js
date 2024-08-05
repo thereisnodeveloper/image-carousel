@@ -98,11 +98,18 @@ function updateViewingWindowSize(viewingWindow, carouselItem) {
 }
 // document.querySelector('.viewing-window').addEventListener('resize', updateViewingWindowSize)
 
-function makeViewingWindow() {
+function createViewingWindow() {
   const viewingWindow = document.createElement('div');
-  const carouselItem = document.querySelector('.carousel-item');
+  viewingWindow.style.border = 'solid 5px green';
+  viewingWindow.style.outline = 'solid 5px green';
+  viewingWindow.style.boxSizing = 'border-box';
+  viewingWindow.className = 'viewing-window';
 
-  updateViewingWindowSize(viewingWindow, carouselItem);
+  const viewingWindowCover = viewingWindow.cloneNode(false);
+
+  const carouselItemElem = document.querySelector('.carousel-item');
+
+  updateViewingWindowSize(viewingWindow, carouselItemElem);
   const resizeObserver = new ResizeObserver((resizeEntries) => {
     for (const entry of resizeEntries) {
       if (entry.contentBoxSize) {
@@ -116,20 +123,16 @@ function makeViewingWindow() {
 
   resizeObserver.observe(document.querySelector('.carousel'));
 
-  viewingWindow.style.border = 'solid 5px green';
-  viewingWindow.style.outline = 'solid 5px green';
-  viewingWindow.style.boxSizing = 'border-box';
-  viewingWindow.className = 'viewing-window';
-
-  document.querySelector('.carousel-wrapper').appendChild(viewingWindow);
+ 
+  document.querySelector('.carousel-wrapper').append(viewingWindow);
 }
 
 document
   .querySelector('.carousel-item')
-  .addEventListener('load', makeViewingWindow);
+  .addEventListener('load', createViewingWindow);
 
 function styleNavDot(navDotElem) {
-  console.log(navDotElem);
+  // console.log(navDotElem);
   navDotElem.classList.toggle('selected');
   return navDotElem;
 }
@@ -243,3 +246,6 @@ function initializeNavDots() {
 }
 
 Carousel.currentNavIndex = initializeNavDots();
+
+//TODO: make viewing window cover rest of carousel
+//TODO: center carousel
