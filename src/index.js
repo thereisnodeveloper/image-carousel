@@ -164,15 +164,15 @@ function moveCarouselAndNav(carouselItemWidth, direction) {
   let shiftAmount;
   if (direction === 'left') {
     if (Carousel.currentNavIndex > 0) {
-      shiftAmount = currentPosition - carouselItemWidth;
+      shiftAmount = currentPosition + carouselItemWidth;
 
       styleNavDot(navDotArray[Carousel.currentNavIndex]);
       Carousel.currentNavIndex -= 1;
       styleNavDot(navDotArray[Carousel.currentNavIndex]);
     }
   } else if (direction === 'right') {
-    if (Carousel.currentNavIndex < navDotArray.length -1) {
-      shiftAmount = currentPosition + carouselItemWidth;
+    if (Carousel.currentNavIndex < navDotArray.length - 1) {
+      shiftAmount = currentPosition - carouselItemWidth;
 
       styleNavDot(navDotArray[Carousel.currentNavIndex]);
       Carousel.currentNavIndex += 1;
