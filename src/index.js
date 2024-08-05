@@ -3,12 +3,15 @@
 /* eslint-disable no-restricted-syntax */
 // [x]TODO: import image
 // [x]TODO: css reset/normalize
-// [ ]TODO: refactor code
-//     [ ] create viewingWindow class
+// [x]TODO: refactor code
+//     [x] create viewingWindow class
 // [x]TODO: carousel shift
 // [x]TODO: FIX viewing window not resizing with browser
 
-// []TODO: make viewing window inside parent, maybe?
+
+// [ ]TODO: impnlement "shift" method of moving carousel 
+
+
 
 // [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image

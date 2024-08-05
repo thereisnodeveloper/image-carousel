@@ -79,12 +79,12 @@ export default class Navigator {
    */
   static moveCarouselAndNav(carouselItemWidth, direction) {
     const carousel = document.querySelector('.carousel');
-    const currentPosition = +carousel.style.left.replace('px', '');
 
-    let shiftAmount;
     if (direction === 'left') {
       if (Carousel.currentNavIndex > 0) {
-        shiftAmount = currentPosition + carouselItemWidth;
+        // shifting children
+        const orphan = carousel.removeChild(carousel.firstChild);
+        carousel.appendChild(orphan);
 
         this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
         Carousel.currentNavIndex -= 1;
@@ -92,14 +92,15 @@ export default class Navigator {
       }
     } else if (direction === 'right') {
       if (Carousel.currentNavIndex < Navigator.navDotArray.length - 1) {
-        shiftAmount = currentPosition - carouselItemWidth;
+        // reverse direction
+        const orphan = carousel.removeChild(carousel.lastChild);
+        carousel.insertBefore(orphan, carousel.firstChild);
 
         this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
         Carousel.currentNavIndex += 1;
         this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
       }
     }
-    carousel.style.left = `${shiftAmount}px`;
   }
 
   static styleNavDot(navDotElem) {
