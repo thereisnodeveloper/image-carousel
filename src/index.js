@@ -8,10 +8,8 @@
 // [x]TODO: carousel shift
 // [x]TODO: FIX viewing window not resizing with browser
 
-
-// [ ]TODO: impnlement "shift" method of moving carousel 
-
-
+// [x]TODO: impnlement "shift" method of moving carousel
+// [ ]TODO: fix carousel size to the largest image within carousel
 
 // [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image
@@ -34,8 +32,10 @@ Carousel.addImagesToCarousel();
 Navigator.addNavButtons();
 
 Carousel.currentNavIndex = Navigator.initializeNavDots();
-Navigator.initializeVisibleImage()
+Navigator.initializeVisibleImage();
 
 // TODO: make viewing window cover rest of carousel
 // TODO: center carousel
-testElem.classList.add()
+testElem.classList.add();
+
+console.log('Carousel.imagesArray:', Carousel.imagesArray)
