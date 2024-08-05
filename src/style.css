@@ -4,7 +4,6 @@
 
 .carousel-wrapper {
   position: relative;
-  
 }
 
 .viewing-window {
@@ -23,8 +22,8 @@
 }
 
 * .nav-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
 }
@@ -35,19 +34,28 @@
 }
 
 .nav-dot.selected {
-    list-style-type: disc;
-    font-size: var(--nav-bullet-size);
-    color:darkblue;
-  }
+  list-style-type: disc;
+  font-size: var(--nav-bullet-size);
+  color: darkblue;
+}
 
+.carousel-item {
+  display: none;
+}
+
+
+.carousel-item.selected {
+  outline:15px solid red;
+  display:block
+}
 
 .nav-minimap {
   display: flex;
-  gap: calc(var(--nav-bullet-size)/2);
+  gap: calc(var(--nav-bullet-size) / 2);
 }
 
-.button-container{
-    display: flex;
-    gap: 30px;
-    justify-content: center;
+.button-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
 }

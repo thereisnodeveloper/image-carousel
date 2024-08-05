@@ -21,19 +21,21 @@ import './css-reset.css';
 import './style.css';
 import Carousel from './carousel-class';
 import Navigator from './navigator';
-import ViewingWindow from './viewing-window';
+// import ViewingWindow from './viewing-window';
 
 const testElem = document.createElement('div');
 
 Carousel.addImagesToCarousel();
 
-document
-  .querySelector('.carousel-item')
-  .addEventListener('load', ViewingWindow.createViewingWindow);
+// document
+//   .querySelector('.carousel-item')
+//   .addEventListener('load', ViewingWindow.createViewingWindow);
 
 Navigator.addNavButtons();
 
 Carousel.currentNavIndex = Navigator.initializeNavDots();
+Navigator.initializeVisibleImage()
 
 // TODO: make viewing window cover rest of carousel
 // TODO: center carousel
+testElem.classList.add()

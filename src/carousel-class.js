@@ -5,10 +5,13 @@ export default class Carousel {
   static numImages = 0;
 
   static currentNavIndex = 0;
+  static imagesArray = [];
+
+  //   static currentImage;
 
   static addImagesToCarousel() {
     // #region configs
-    const imageBank = [carouselImage1, carouselImage2];
+    const sampleImageBank = [carouselImage1, carouselImage2];
     const numImagesToAdd = 5;
     // #endregion
 
@@ -22,23 +25,27 @@ export default class Carousel {
     }
     /** * create carousel to hold images */
     function createCarousel() {
-      const carousel = document.createElement('div');
-      carousel.classList.add('carousel');
-      carousel.style.display = 'flex';
-      return carousel;
+      const carouselElem = document.createElement('div');
+      carouselElem.classList.add('carousel');
+      carouselElem.style.display = 'flex';
+      return carouselElem;
     }
     this.carouselElemRef = createCarousel();
 
     for (let i = 0; i < numImagesToAdd; i += 1) {
       let imgToAdd = new Image();
       const rand01 = Math.round(Math.random());
-      imgToAdd.src = imageBank[rand01];
+      imgToAdd.src = sampleImageBank[rand01];
       imgToAdd = styleCarouselItems(imgToAdd);
 
       imgToAdd = document.createElement('div').appendChild(imgToAdd);
       imgToAdd.classList.add('carousel-item');
-      imgToAdd.setAttribute('id', i);
+      imgToAdd.setAttribute('index', i);
       Carousel.numImages += 1;
+
+      //FIXME: testing whether or not it matters to add Elemref to an array
+      //before OR after appending to its parent
+      Carousel.imagesArray.push(imgToAdd);
 
       this.carouselElemRef.appendChild(imgToAdd);
     }

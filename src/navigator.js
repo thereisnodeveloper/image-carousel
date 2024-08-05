@@ -2,8 +2,13 @@ import leftArrow from './images/arrow-left.svg';
 import rightArrow from './images/arrow-right.svg';
 import Carousel from './carousel-class';
 
+const testElem = document.createElement('div');
+
 /* eslint-disable no-param-reassign */
 export default class Navigator {
+  // constructor() {
+  //   Navigator.initializeVisibleImage()
+  // }
   static navDotArray = [];
 
   static addNavButtons() {
@@ -25,12 +30,11 @@ export default class Navigator {
     styleElement(goRight, rightArrow);
 
     [goLeft, goRight].forEach((button) => {
-      const width = document.querySelector('.carousel-item').clientWidth;
       let direction;
       if (button === goLeft) direction = 'left';
       if (button === goRight) direction = 'right';
       button.addEventListener('click', () => {
-        this.moveCarouselAndNav(width, direction);
+        Navigator.moveCarouselAndNav(direction);
       });
     });
 
@@ -54,9 +58,14 @@ export default class Navigator {
     return navMinimap;
   }
 
+  static initializeVisibleImage() {
+    // Carousel.imagesArray[0].classList.add('selected')
+    this.toggleSelectedClass(Carousel.imagesArray[0]);
+  }
+
   static initializeNavDots() {
     const currentNavIndex = 0;
-    this.styleNavDot(Navigator.navDotArray[0]);
+    this.toggleSelectedClass(Navigator.navDotArray[0]);
     // document.body.appendChild()
     return currentNavIndex;
   }
@@ -77,35 +86,44 @@ export default class Navigator {
    * // Move the carousel to the right
    * moveCarousel(200, 'right');
    */
-  static moveCarouselAndNav(carouselItemWidth, direction) {
-    const carousel = document.querySelector('.carousel');
+  static moveCarouselAndNav(direction) {
+    const carouselElem = document.querySelector('.carousel');
+    //  TODO: make navigators change index, and apply styles BASED
+    // FIXME: ONTHATINDEX
+
+    //[x]  TODO: make carousel loop (if it reaches the end, start from beginning again)
+
+    this.toggleSelectedClass(Navigator.navDotArray[Carousel.currentNavIndex]);
+    this.removeSelectedClassFromAll();
 
     if (direction === 'left') {
-      if (Carousel.currentNavIndex > 0) {
-        // shifting children
-        const orphan = carousel.removeChild(carousel.firstChild);
-        carousel.appendChild(orphan);
-
-        this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
-        Carousel.currentNavIndex -= 1;
-        this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
-      }
+      if (Carousel.currentNavIndex === 0) {
+        Carousel.currentNavIndex = Carousel.imagesArray.length - 1;
+      } else Carousel.currentNavIndex -= 1;
     } else if (direction === 'right') {
-      if (Carousel.currentNavIndex < Navigator.navDotArray.length - 1) {
-        // reverse direction
-        const orphan = carousel.removeChild(carousel.lastChild);
-        carousel.insertBefore(orphan, carousel.firstChild);
-
-        this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
-        Carousel.currentNavIndex += 1;
-        this.styleNavDot(Navigator.navDotArray[Carousel.currentNavIndex]);
-      }
+      if (Carousel.currentNavIndex === Carousel.imagesArray.length - 1) {
+        Carousel.currentNavIndex = 0;
+      } else Carousel.currentNavIndex += 1;
     }
+
+    this.toggleSelectedClass(Navigator.navDotArray[Carousel.currentNavIndex]);
+    Carousel.imagesArray[Carousel.currentNavIndex].classList.add('selected');
   }
 
-  static styleNavDot(navDotElem) {
-    // console.log(navDotElem);
-    navDotElem.classList.toggle('selected');
-    return navDotElem;
+  static removeSelectedClassFromAll() {
+    for (const img of Carousel.imagesArray) {
+      if(img.classList.contains('selected'))
+      img.classList.remove('selected');
+    }
+    // Carousel.imagesArray.forEach(img=>{
+    //   if(img.classList.contains('selected')){img.classList.remove('selected')}
+    // })
   }
+
+  static toggleSelectedClass(elem) {
+    // console.log(navDotElem);
+    elem.classList.toggle('selected');
+    return elem;
+  }
+  
 }

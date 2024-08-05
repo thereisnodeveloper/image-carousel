@@ -9,7 +9,7 @@ export default class ViewingWindow {
   static createViewingWindow() {
     const viewingWindow = document.createElement('div');
     viewingWindow.style.border = 'solid 5px green';
-    viewingWindow.style.outline = 'solid 5px green';
+    // viewingWindow.style.outline = 'solid 5px green';
     viewingWindow.style.boxSizing = 'border-box';
     viewingWindow.className = 'viewing-window';
 
