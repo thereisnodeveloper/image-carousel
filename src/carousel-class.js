@@ -13,7 +13,6 @@ export default class Carousel {
 
   static imagesArray = [];
 
-  //   static currentImage;
 
   static addImagesToCarousel() {
     // #region configs
@@ -23,14 +22,12 @@ export default class Carousel {
 
     function styleCarouselItems(img) {
       const newImg = img.cloneNode(true);
-      newImg.style.border = 'solid 5px black';
-      newImg.style.margin = '30px';
-      newImg.style.flex = '1 0 0px';
+
+      // newImg.style.flex = '1 0 0px';
       newImg.style.minWidth = '0px';
       newImg.style.minHeight = '0px';
       return newImg;
     }
-    /** * create carousel to hold images */
     function createCarousel() {
       const carouselElem = document.createElement('div');
       carouselElem.classList.add('carousel');
@@ -39,36 +36,7 @@ export default class Carousel {
     }
     Carousel.carouselElemRef = createCarousel();
 
-    //FIXME: can't figure out why height come out as 0
-    function findLargest() {
-      const wh = ['width', 'height'];
-      const whResult = wh.map((dimension) => {
-        const reduceResult = Carousel.imagesArray.reduce((prev, curr) => {
-          let larger;
-          if (curr[dimension] > prev[dimension]) {
-            larger = curr;
-          } else {
-            larger = prev;
-          }
-          return larger;
-        });
-        return reduceResult[dimension];
-      });
-      console.log(whResult);
-
-      // const result = Carousel.imagesArray.reduce((prev, curr) => {
-      //   let larger;
-      //   if (curr.width > prev.width) {
-      //     larger = curr;
-      //   } else {
-      //     larger = prev;
-      //   }
-      //   return larger;
-      // });
-      // return result;
-    }
     // Carousel.carouselElemRef.addEventListener('load', findLargest);
-    document.addEventListener('DOMContentLoaded', findLargest);
     // document.addEventListener('DOMContentLoaded', () => {
     //   console.log([
     //     document.querySelector('.carousel-item').offsetWidth,

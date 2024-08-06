@@ -12,7 +12,7 @@ export default class Navigator {
   static navDotArray = [];
 
   static addNavButtons() {
-    // TODO:get img to serve as button
+    // [x] TODO:get img to serve as button
     const goLeft = document.createElement('button');
     const goRight = document.createElement('button');
     const buttonContainer = document.createElement('div');
@@ -88,10 +88,9 @@ export default class Navigator {
    */
   static moveCarouselAndNav(direction) {
     const carouselElem = document.querySelector('.carousel');
-    //  TODO: make navigators change index, and apply styles BASED
-    // FIXME: ONTHATINDEX
-
-    //[x]  TODO: make carousel loop (if it reaches the end, start from beginning again)
+    // [x] TODO: make navigators change index, and apply styles BASED
+    // [x]  TODO: make carousel loop (if it reaches the end, start from
+    // beginning again)
 
     this.toggleSelectedClass(Navigator.navDotArray[Carousel.currentNavIndex]);
     this.removeSelectedClassFromAll();
@@ -112,8 +111,7 @@ export default class Navigator {
 
   static removeSelectedClassFromAll() {
     for (const img of Carousel.imagesArray) {
-      if(img.classList.contains('selected'))
-      img.classList.remove('selected');
+      if (img.classList.contains('selected')) img.classList.remove('selected');
     }
     // Carousel.imagesArray.forEach(img=>{
     //   if(img.classList.contains('selected')){img.classList.remove('selected')}
@@ -125,5 +123,4 @@ export default class Navigator {
     elem.classList.toggle('selected');
     return elem;
   }
-  
 }

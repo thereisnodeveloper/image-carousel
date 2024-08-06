@@ -2,6 +2,10 @@
   --nav-bullet-size: 100px;
 }
 
+body{
+  background-color: rgb(45, 45, 45);
+}
+
 .carousel-wrapper {
   position: relative;
   display:flex;
@@ -18,7 +22,18 @@
 
 .carousel {
   position: relative;
-  width: 50%
+  width: 600px;
+  height: 500px
+  /* width: 40%;
+  height: 30%;
+  max-width: 600px;
+  max-height: 500px; */
+}
+.carousel-item{
+  flex: 1 1 0;
+border : solid 5px black;
+box-shadow:rgb(62, 135, 209);
+  margin: 50px;
 }
 
 .nav-container {

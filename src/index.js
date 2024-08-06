@@ -34,22 +34,5 @@ Navigator.addNavButtons();
 Carousel.currentNavIndex = Navigator.initializeNavDots();
 Navigator.initializeVisibleImage();
 
-// TODO: make viewing window cover rest of carousel
-// TODO: center carousel
-testElem.classList.add();
-
-
-function findLargest() {
-  const result = Carousel.imagesArray.reduce((prev, curr) => {
-    let larger;
-    if (curr.naturalWidth > prev.naturalWidth) {
-      larger = curr;
-    } else {
-      larger = prev;
-    }
-    return larger;
-  });
-  console.log(result);
-  return result;
-}
-Carousel.carouselElemRef.addEventListener('load', findLargest);
+// [ ] TODO: make viewing window cover rest of carousel
+// [ ] TODO: center carousel
