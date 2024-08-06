@@ -44,6 +44,21 @@ export default class Navigator {
     document.querySelector('.carousel-wrapper').append(navContainer);
   }
 
+  /**
+   * jump to clicked navdot
+   * @param {*} evt 
+   */
+  static jumpToIndex(evt) {
+    const index = evt.target.getAttribute('id');
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+
+    Carousel.currentNavIndex = index;
+    Navigator.removeSelectedClassFromAll();
+
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+    Carousel.imagesArray[Carousel.currentNavIndex].classList.add('selected');
+  }
+
   static createNavMinimap() {
     const navMinimap = document.createElement('ul');
     navMinimap.className = 'nav-minimap';
@@ -54,18 +69,20 @@ export default class Navigator {
       liElem.setAttribute('id', i);
       navMinimap.appendChild(liElem);
       Navigator.navDotArray.push(liElem);
+
+      liElem.addEventListener('click', Navigator.jumpToIndex);
     }
     return navMinimap;
   }
 
   static initializeVisibleImage() {
     // Carousel.imagesArray[0].classList.add('selected')
-    this.toggleSelectedClass(Carousel.imagesArray[0]);
+    this.toggleSelectedClassNav(Carousel.imagesArray[0]);
   }
 
   static initializeNavDots() {
     const currentNavIndex = 0;
-    this.toggleSelectedClass(Navigator.navDotArray[0]);
+    this.toggleSelectedClassNav(Navigator.navDotArray[0]);
     // document.body.appendChild()
     return currentNavIndex;
   }
@@ -92,7 +109,7 @@ export default class Navigator {
     // [x]  TODO: make carousel loop (if it reaches the end, start from
     // beginning again)
 
-    this.toggleSelectedClass(Navigator.navDotArray[Carousel.currentNavIndex]);
+    this.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
     this.removeSelectedClassFromAll();
 
     if (direction === 'left') {
@@ -105,7 +122,7 @@ export default class Navigator {
       } else Carousel.currentNavIndex += 1;
     }
 
-    this.toggleSelectedClass(Navigator.navDotArray[Carousel.currentNavIndex]);
+    this.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
     Carousel.imagesArray[Carousel.currentNavIndex].classList.add('selected');
   }
 
@@ -118,7 +135,7 @@ export default class Navigator {
     // })
   }
 
-  static toggleSelectedClass(elem) {
+  static toggleSelectedClassNav(elem) {
     // console.log(navDotElem);
     elem.classList.toggle('selected');
     return elem;

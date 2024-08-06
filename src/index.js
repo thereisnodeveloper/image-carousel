@@ -9,8 +9,8 @@
 // [x]TODO: FIX viewing window not resizing with browser
 
 // [x]TODO: impnlement "shift" method of moving carousel
-// [ ]TODO: fix carousel size to the largest image within carousel
-
+// TODO: fix carousel size to the largest image within carousel
+// [ ]TODO: make: clicking on navdot switches to that image
 // [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image
 // [X]TODO: measure length of each image
