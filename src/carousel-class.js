@@ -38,7 +38,45 @@ export default class Carousel {
       return carouselElem;
     }
     Carousel.carouselElemRef = createCarousel();
-    Carousel.imagesArrayWithWL = [];
+
+    //FIXME: can't figure out why height come out as 0
+    function findLargest() {
+      const wh = ['width', 'height'];
+      const whResult = wh.map((dimension) => {
+        const reduceResult = Carousel.imagesArray.reduce((prev, curr) => {
+          let larger;
+          if (curr[dimension] > prev[dimension]) {
+            larger = curr;
+          } else {
+            larger = prev;
+          }
+          return larger;
+        });
+        return reduceResult[dimension];
+      });
+      console.log(whResult);
+
+      // const result = Carousel.imagesArray.reduce((prev, curr) => {
+      //   let larger;
+      //   if (curr.width > prev.width) {
+      //     larger = curr;
+      //   } else {
+      //     larger = prev;
+      //   }
+      //   return larger;
+      // });
+      // return result;
+    }
+    // Carousel.carouselElemRef.addEventListener('load', findLargest);
+    document.addEventListener('DOMContentLoaded', findLargest);
+    // document.addEventListener('DOMContentLoaded', () => {
+    //   console.log([
+    //     document.querySelector('.carousel-item').offsetWidth,
+    //     document.querySelector('.carousel-item').offsetHeight,
+    //   ]);
+    // });
+
+    // Carousel.imagesArrayWithWL = [];
     // testElem.getBoundingClientRect()
 
     for (let i = 0; i < numImagesToAdd; i += 1) {

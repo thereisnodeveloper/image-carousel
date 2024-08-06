@@ -38,4 +38,18 @@ Navigator.initializeVisibleImage();
 // TODO: center carousel
 testElem.classList.add();
 
-console.log('Carousel.imagesArray:', Carousel.imagesArray)
+
+function findLargest() {
+  const result = Carousel.imagesArray.reduce((prev, curr) => {
+    let larger;
+    if (curr.naturalWidth > prev.naturalWidth) {
+      larger = curr;
+    } else {
+      larger = prev;
+    }
+    return larger;
+  });
+  console.log(result);
+  return result;
+}
+Carousel.carouselElemRef.addEventListener('load', findLargest);
