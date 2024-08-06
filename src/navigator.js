@@ -46,7 +46,7 @@ export default class Navigator {
 
   /**
    * jump to clicked navdot
-   * @param {*} evt 
+   * @param {*} evt
    */
   static jumpToIndex(evt) {
     const index = evt.target.getAttribute('id');

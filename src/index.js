@@ -10,7 +10,9 @@
 
 // [x]TODO: impnlement "shift" method of moving carousel
 // TODO: fix carousel size to the largest image within carousel
-// [ ]TODO: make: clicking on navdot switches to that image
+// [x]TODO: make: clicking on navdot switches to that image
+// [ ]TODO: timer
+
 // [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image
 // [X]TODO: measure length of each image
@@ -34,5 +36,9 @@ Navigator.addNavButtons();
 Carousel.currentNavIndex = Navigator.initializeNavDots();
 Navigator.initializeVisibleImage();
 
-// [ ] TODO: make viewing window cover rest of carousel
 // [ ] TODO: center carousel
+
+// window.addEventListener('DOMContentLoaded', beginTimer);
+
+const moveCarouselRightBound = Navigator.moveCarouselAndNav.bind(Navigator, 'right');
+setInterval(moveCarouselRightBound, 5000);

@@ -13,7 +13,6 @@ export default class Carousel {
 
   static imagesArray = [];
 
-
   static addImagesToCarousel() {
     // #region configs
     const sampleImageBank = images;
