@@ -11,6 +11,7 @@ body{
   display:flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40px;
 }
 
 .viewing-window {
@@ -31,7 +32,7 @@ body{
 }
 .carousel-item{
   flex: 1 1 0;
-border : solid 5px black;
+/* border : solid 5px black; */
 box-shadow:rgb(62, 135, 209);
   margin: 50px;
 }
