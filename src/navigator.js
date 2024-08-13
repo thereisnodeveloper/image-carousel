@@ -54,6 +54,8 @@ export default class Navigator {
     Carousel.currentNavIndex = +index;
     Navigator.removeSelectedClassFromAll();
     Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+    Carousel.imagesArray[Carousel.currentNavIndex].classList.toggle('selected');
+
   }
 
   static createNavMinimap() {
