@@ -30,7 +30,7 @@ import Navigator from './navigator';
 const testElem = document.createElement('div');
 
 Carousel.addImagesToCarousel();
-Navigator.addNavButtons();
+Navigator.addNavigationButtons();
 
 Carousel.currentNavIndex = Navigator.initializeNavDots();
 Navigator.initializeVisibleImage();

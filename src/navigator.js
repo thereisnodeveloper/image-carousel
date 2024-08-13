@@ -4,7 +4,6 @@ import rightArrow from './images/arrow-right.svg';
 import Carousel from './carousel-class';
 
 const testElem = document.createElement('div');
-
 /* eslint-disable no-param-reassign */
 export default class Navigator {
   // constructor() {
@@ -12,8 +11,7 @@ export default class Navigator {
   // }
   static navDotArray = [];
 
-  static addNavButtons() {
-    // [x] TODO:get img to serve as button
+  static addNavigationButtons() {
     const goLeft = document.createElement('button');
     const goRight = document.createElement('button');
     const buttonContainer = document.createElement('div');
