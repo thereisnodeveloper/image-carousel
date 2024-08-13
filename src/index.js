@@ -38,4 +38,4 @@ Navigator.initializeVisibleImage();
 // [ ] TODO: center carousel
 
 const moveCarouselRightBound = Navigator.moveCarouselAndNav.bind(Navigator, 'right');
-setInterval(moveCarouselRightBound, 5000);
+// setInterval(moveCarouselRightBound, 5000);

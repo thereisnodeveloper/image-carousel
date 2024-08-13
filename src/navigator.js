@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import leftArrow from './images/arrow-left.svg';
 import rightArrow from './images/arrow-right.svg';
 import Carousel from './carousel-class';
@@ -52,11 +53,9 @@ export default class Navigator {
     const index = evt.target.getAttribute('id');
     Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
 
-    Carousel.currentNavIndex = index;
+    Carousel.currentNavIndex = +index;
     Navigator.removeSelectedClassFromAll();
-
     Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
-    Carousel.imagesArray[Carousel.currentNavIndex].classList.add('selected');
   }
 
   static createNavMinimap() {
@@ -76,41 +75,19 @@ export default class Navigator {
   }
 
   static initializeVisibleImage() {
-    // Carousel.imagesArray[0].classList.add('selected')
-    this.toggleSelectedClassNav(Carousel.imagesArray[0]);
+    Navigator.toggleSelectedClassNav(Carousel.imagesArray[0]);
   }
 
   static initializeNavDots() {
     const currentNavIndex = 0;
-    this.toggleSelectedClassNav(Navigator.navDotArray[0]);
-    // document.body.appendChild()
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[0]);
     return currentNavIndex;
   }
 
-  /**
-   *
-   * Moves the carousel in the specified direction.
-   *
-   * @param {number} carouselItemWidth - The width of a single carousel item.
-   * @param {string} direction - The direction to move the carousel.
-   *                             Expected values: 'left', 'right'.
-   *
-   * @example
-   * // Move the carousel to the left
-   * moveCarousel(200, 'left');
-   *
-   * @example
-   * // Move the carousel to the right
-   * moveCarousel(200, 'right');
-   */
   static moveCarouselAndNav(direction) {
     const carouselElem = document.querySelector('.carousel');
-    // [x] TODO: make navigators change index, and apply styles BASED
-    // [x]  TODO: make carousel loop (if it reaches the end, start from
-    // beginning again)
-
-    this.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
-    this.removeSelectedClassFromAll();
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+    Navigator.removeSelectedClassFromAll();
 
     if (direction === 'left') {
       if (Carousel.currentNavIndex === 0) {
@@ -122,7 +99,7 @@ export default class Navigator {
       } else Carousel.currentNavIndex += 1;
     }
 
-    this.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
     Carousel.imagesArray[Carousel.currentNavIndex].classList.add('selected');
   }
 
@@ -130,13 +107,9 @@ export default class Navigator {
     for (const img of Carousel.imagesArray) {
       if (img.classList.contains('selected')) img.classList.remove('selected');
     }
-    // Carousel.imagesArray.forEach(img=>{
-    //   if(img.classList.contains('selected')){img.classList.remove('selected')}
-    // })
   }
 
   static toggleSelectedClassNav(elem) {
-    // console.log(navDotElem);
     elem.classList.toggle('selected');
     return elem;
   }
