@@ -15,8 +15,6 @@
 // [ ]TODO: customize # of images shown, customize timer delay
 // [ ]TODO: refactorSyntax errors or bugs?
 
-
-
 // [X]TODO: create viewing window
 // CURRENT: figure out how to make viewing window same size as 1 image
 // [X]TODO: measure length of each image
@@ -25,17 +23,23 @@ import './css-reset.css';
 import './style.css';
 import Carousel from './carousel-class';
 import Navigator from './navigator';
-// import ViewingWindow from './viewing-window';
+
 
 const testElem = document.createElement('div');
 
-Carousel.addImagesToCarousel();
-Navigator.addNavigationButtons();
+function initiateCarousel() {
+  Carousel.addImagesToCarousel();
+  Carousel.createCarouselWrapper();
+}
+function initiateNavigator() {
+  Navigator.addNavigationButtons();
+  Carousel.navIndex = Navigator.setInitialNavDot();
+  Navigator.setInitialVisibleImage();
+}
 
-Carousel.currentNavIndex = Navigator.initializeNavDots();
-Navigator.initializeVisibleImage();
-
+initiateCarousel();
+initiateNavigator();
 // [ ] TODO: center carousel
 
 const moveCarouselRightBound = Navigator.moveCarouselAndNav.bind(Navigator, 'right');
-// setInterval(moveCarouselRightBound, 5000);
+setInterval(moveCarouselRightBound, 2000);

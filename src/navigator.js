@@ -6,39 +6,39 @@ import Carousel from './carousel-class';
 const testElem = document.createElement('div');
 /* eslint-disable no-param-reassign */
 export default class Navigator {
-  // constructor() {
-  //   Navigator.initializeVisibleImage()
-  // }
+
   static navDotArray = [];
 
   static addNavigationButtons() {
-    const goLeft = document.createElement('button');
-    const goRight = document.createElement('button');
+    const goLeftButton = document.createElement('button');
+    const goRightButton = document.createElement('button');
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
     const navContainer = document.createElement('div');
     navContainer.className = 'nav-container';
 
     function styleElement(element, backgroundImage) {
+      // navigator.js
       element.style.backgroundImage = `url(${backgroundImage})`;
-      element.style.backgroundSize = 'contain';
-      element.style.width = '30px';
-      element.style.height = '30px';
+      element.classList.add('button-style');
     }
-    styleElement(goLeft, leftArrow);
-    styleElement(goRight, rightArrow);
+    styleElement(goLeftButton, leftArrow);
+    styleElement(goRightButton, rightArrow);
 
-    [goLeft, goRight].forEach((button) => {
-      let direction;
-      if (button === goLeft) direction = 'left';
-      if (button === goRight) direction = 'right';
-      button.addEventListener('click', () => {
-        Navigator.moveCarouselAndNav(direction);
+    function addEventListenersToButtons() {
+      [goLeftButton, goRightButton].forEach((button) => {
+        let direction;
+        if (button === goLeftButton) direction = 'left';
+        if (button === goRightButton) direction = 'right';
+        button.addEventListener('click', () => {
+          Navigator.moveCarouselAndNav(direction);
+        });
       });
-    });
+    }
+    addEventListenersToButtons();
 
     const navMinimap = this.createNavMinimap();
-    buttonContainer.append(goLeft, goRight);
+    buttonContainer.append(goLeftButton, goRightButton);
     navContainer.append(navMinimap, buttonContainer);
     document.querySelector('.carousel-wrapper').append(navContainer);
   }
@@ -47,15 +47,14 @@ export default class Navigator {
    * jump to clicked navdot
    * @param {*} evt
    */
-  static jumpToIndex(evt) {
+  static jumpToIndexOnClick(evt) {
     const index = evt.target.getAttribute('id');
-    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.navIndex]);
 
-    Carousel.currentNavIndex = +index;
+    Carousel.navIndex = +index;
     Navigator.removeSelectedClassFromAll();
-    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
-    Carousel.imagesArray[Carousel.currentNavIndex].classList.toggle('selected');
-
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.navIndex]);
+    Carousel.imagesArray[Carousel.navIndex].classList.toggle('selected');
   }
 
   static createNavMinimap() {
@@ -69,38 +68,43 @@ export default class Navigator {
       navMinimap.appendChild(liElem);
       Navigator.navDotArray.push(liElem);
 
-      liElem.addEventListener('click', Navigator.jumpToIndex);
+      liElem.addEventListener('click', Navigator.jumpToIndexOnClick);
     }
     return navMinimap;
   }
 
-  static initializeVisibleImage() {
+  static setInitialVisibleImage() {
     Navigator.toggleSelectedClassNav(Carousel.imagesArray[0]);
   }
 
-  static initializeNavDots() {
+  static setInitialNavDot() {
     const currentNavIndex = 0;
     Navigator.toggleSelectedClassNav(Navigator.navDotArray[0]);
     return currentNavIndex;
   }
 
   static moveCarouselAndNav(direction) {
-    const carouselElem = document.querySelector('.carousel');
-    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
+
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.navIndex]);
     Navigator.removeSelectedClassFromAll();
 
-    if (direction === 'left') {
-      if (Carousel.currentNavIndex === 0) {
-        Carousel.currentNavIndex = Carousel.imagesArray.length - 1;
-      } else Carousel.currentNavIndex -= 1;
-    } else if (direction === 'right') {
-      if (Carousel.currentNavIndex === Carousel.imagesArray.length - 1) {
-        Carousel.currentNavIndex = 0;
-      } else Carousel.currentNavIndex += 1;
+    function howMuchToMove(navIndex) {
+      let index = navIndex;
+      if (direction === 'left') {
+        if (index === 0) {
+          index = Carousel.imagesArray.length - 1;
+        } else index -= 1;
+      } else if (direction === 'right') {
+        if (index === Carousel.imagesArray.length - 1) {
+          index = 0;
+        } else index += 1;
+      }
+      return index;
     }
+    Carousel.navIndex = howMuchToMove(Carousel.navIndex);
 
-    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.currentNavIndex]);
-    Carousel.imagesArray[Carousel.currentNavIndex].classList.add('selected');
+    Navigator.toggleSelectedClassNav(Navigator.navDotArray[Carousel.navIndex]);
+    Carousel.imagesArray[Carousel.navIndex].classList.add('selected');
   }
 
   static removeSelectedClassFromAll() {

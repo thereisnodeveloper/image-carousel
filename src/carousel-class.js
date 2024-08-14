@@ -9,9 +9,11 @@ const images = importAll(contextModule);
 export default class Carousel {
   static numImages = 0;
 
-  static currentNavIndex = 0;
+  static navIndex = 0;
 
   static imagesArray = [];
+
+  static carouselElemRef;
 
   static addImagesToCarousel() {
     // #region configs
@@ -19,14 +21,12 @@ export default class Carousel {
     const numImagesToAdd = sampleImageBank.length;
     // #endregion
 
-    function styleCarouselItems(img) {
-      const newImg = img.cloneNode(true);
-
-      // newImg.style.flex = '1 0 0px';
-      newImg.style.minWidth = '0px';
-      newImg.style.minHeight = '0px';
-      return newImg;
-    }
+    // function styleCarouselItems(img) {
+    //   const newImg = img.cloneNode(true);
+    //   // newImg.style.minWidth = '0px';
+    //   // newImg.style.minHeight = '0px';
+    //   return newImg;
+    // }
     function createCarousel() {
       const carouselElem = document.createElement('div');
       carouselElem.classList.add('carousel');
@@ -35,35 +35,31 @@ export default class Carousel {
     }
     Carousel.carouselElemRef = createCarousel();
 
-    // Carousel.carouselElemRef.addEventListener('load', findLargest);
-    // document.addEventListener('DOMContentLoaded', () => {
-    //   console.log([
-    //     document.querySelector('.carousel-item').offsetWidth,
-    //     document.querySelector('.carousel-item').offsetHeight,
-    //   ]);
-    // });
+    function addImages() {
+      function initiateImage(index) {
+        let imgToAdd = new Image();
+        imgToAdd.src = sampleImageBank[index];
+        imgToAdd = document.createElement('div').appendChild(imgToAdd);
+        imgToAdd.classList.add('carousel-item');
+        imgToAdd.setAttribute('index', index);
+        return imgToAdd;
+      }
 
-    // Carousel.imagesArrayWithWL = [];
-    // testElem.getBoundingClientRect()
+      for (let i = 0; i < numImagesToAdd; i += 1) {
+        const imgToAdd = initiateImage(i);
+        Carousel.numImages += 1;
 
-    for (let i = 0; i < numImagesToAdd; i += 1) {
-      let imgToAdd = new Image();
-      // const rand01 = Math.round(Math.random());
-      imgToAdd.src = sampleImageBank[i];
-      imgToAdd = styleCarouselItems(imgToAdd);
+        Carousel.imagesArray.push(imgToAdd);
 
-      imgToAdd = document.createElement('div').appendChild(imgToAdd);
-      imgToAdd.classList.add('carousel-item');
-      imgToAdd.setAttribute('index', i);
-      Carousel.numImages += 1;
+        // [ ]TODO: change carousel size to accommodate largest img - width and length
 
-      Carousel.imagesArray.push(imgToAdd);
-
-      // [ ]TODO: change carousel size to accommodate largest img - width and length
-
-      this.carouselElemRef.appendChild(imgToAdd);
+        Carousel.carouselElemRef.appendChild(imgToAdd);
+      }
     }
+    addImages();
+  }
 
+  static createCarouselWrapper() {
     const carouselWrapper = document.createElement('div');
     carouselWrapper.className = 'carousel-wrapper';
     carouselWrapper.appendChild(this.carouselElemRef);
